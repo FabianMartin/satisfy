@@ -122,10 +122,11 @@ class Application
                 if (count($parts) == 2) {
                     if (preg_match('#refs/tags/(v?\d.*[^}])$#', $parts[1], $matches)) {
                         $refs[$this->getVersionFromString($matches[1])] = $matches[1];
+                    } else if (preg_match('#refs/tags/((standard|basic|full)/v?\d.*[^}])$#', $parts[1], $matches)) {
+                        $refs[$this->getVersionFromString($matches[1])] = $matches[1];
                     } else if (preg_match('#refs/heads/(.*[^}])$#', $parts[1], $matches)) {
                         $refs['dev-' . $this->getVersionFromString($matches[1])] = $parts[0];
                     }
-
                 }
             }
         }
@@ -143,6 +144,8 @@ class Application
             if (count($matches) >= 6) {
                 $version .= $matches[5];
             }
+        } elseif (preg_match('#^(full|standard|basic)\/(\d+\.\d+\.\d+)#', $string, $matches)) {
+            $version = $matches[2] . '-' . $matches[1];
         } else {
             $version = $string;
         }
