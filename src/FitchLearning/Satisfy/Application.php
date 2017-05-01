@@ -145,7 +145,7 @@ class Application
                 $version .= $matches[5];
             }
         } elseif (preg_match('#^(full|standard|basic)\/(\d+\.\d+\.\d+)#', $string, $matches)) {
-            $version = $matches[2] . '-' . $matches[1];
+            $version = 'dev-'. $matches[1] . '/' . $matches[2];
         } else {
             $version = $string;
         }
